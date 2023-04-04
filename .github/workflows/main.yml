@@ -65,5 +65,6 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/infra_action:latest
+            sudo docker stop $(sudo docker ps -a -q|xargs -r sudo docker stop)
             sudo docker stop $(sudo docker ps -a -q -f status=exited|xargs -r sudo docker rm -v)
             sudo docker run --rm -d -p 5000:5000 ${{ secrets.DOCKER_USERNAME }}/infra_action:latest
